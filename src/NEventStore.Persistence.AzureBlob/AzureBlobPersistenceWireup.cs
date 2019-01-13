@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using NEventStore.Logging;
+﻿using NEventStore.Logging;
 using NEventStore.Serialization;
 
 namespace NEventStore.Persistence.AzureBlob
@@ -21,10 +20,6 @@ namespace NEventStore.Persistence.AzureBlob
             : base(inner)
         {
             Logger.Debug("Configuring Azure blob persistence engine.");
-
-            var options = Container.Resolve<TransactionScopeOption>();
-            if (options != TransactionScopeOption.Suppress)
-            { Logger.Warn(Messages.TransactionScopeNotSupportedSettingIgnored); }
 
             Container.Register(c => new AzureBlobPersistenceFactory(connectionString, c.Resolve<ISerialize>(), persistenceOptions).Build());
         }

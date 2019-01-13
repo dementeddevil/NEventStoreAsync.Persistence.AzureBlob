@@ -48,21 +48,44 @@ namespace NEventStore.Persistence.AzureBlob
 			return pageBlob ?? await CreateNewAsync(blobContainer, blobId, startingPages, cancellationToken).ConfigureAwait(false);
 		}
 
-		/// <summary>
-		/// Gets all wrapped page blobs matching the blob id prefix
-		/// </summary>
-		/// <param name="blobContainer"></param>
-		/// <param name="blobId"></param>
-		/// <returns></returns>
-		public static IEnumerable<WrappedPageBlob> GetAllMatchingPrefix(CloudBlobContainer blobContainer, string prefix)
+        /// <summary>
+        /// Gets all wrapped page blobs matching the blob id prefix
+        /// </summary>
+        /// <param name="blobContainer"></param>
+        /// <param name="prefix"></param>
+        /// <param name="processor"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static async Task GetAllMatchingPrefixAsync(
+            CloudBlobContainer blobContainer,
+            string prefix,
+            Func<WrappedPageBlob, Task> processor,
+            CancellationToken cancellationToken)
 		{
 			Logger.Verbose("Getting all blobs with prefix [{0}]", prefix);
 
-			var pageBlobs = blobContainer
-				.ListBlobs(prefix, true, BlobListingDetails.Metadata).OfType<CloudPageBlob>();
+            BlobContinuationToken continuationToken = null;
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var segment = await blobContainer
+                    .ListBlobsSegmentedAsync(
+                        prefix,
+                        true,
+                        BlobListingDetails.Metadata,
+                        null,
+                        continuationToken,
+                        null,
+                        null,
+                        cancellationToken)
+                    .ConfigureAwait(false);
 
-			foreach (var pageBlob in pageBlobs)
-			{ yield return new WrappedPageBlob(pageBlob); }
+                continuationToken = segment.ContinuationToken;
+
+                foreach (var pageBlob in segment.Results.OfType<CloudPageBlob>())
+                {
+                    await processor(new WrappedPageBlob(pageBlob)).ConfigureAwait(false);
+                }
+            }
 		}
 
         /// <summary>
@@ -100,6 +123,7 @@ namespace NEventStore.Persistence.AzureBlob
         /// </summary>
         /// <param name="blobContainer">the container that owns the blob</param>
         /// <param name="blobId">the id of the blob</param>
+        /// <param name="startingPages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public static async Task<WrappedPageBlob> CreateNewAsync(CloudBlobContainer blobContainer, string blobId, int startingPages, CancellationToken cancellationToken)
@@ -108,11 +132,20 @@ namespace NEventStore.Persistence.AzureBlob
 
 			var pageBlob = blobContainer.GetPageBlobReference(blobId);
 			await pageBlob
-                .CreateAsync((long)512 * startingPages, cancellationToken)
+                .CreateAsync(
+                    (long)512 * startingPages,
+                    null,
+                    null,
+                    null,
+                    cancellationToken)
                 .ConfigureAwait(false);
 
 			await pageBlob
-                .FetchAttributesAsync(cancellationToken)
+                .FetchAttributesAsync(
+                    null,
+                    null,
+                    null,
+                    cancellationToken)
                 .ConfigureAwait(false);
 
 			return new WrappedPageBlob(pageBlob);
@@ -405,12 +438,17 @@ namespace NEventStore.Persistence.AzureBlob
             }
 		}
 
-		/// <summary>
-		/// Get page aligned number of bytes from a non page aligned number
-		/// </summary>
-		/// <param name="nonAligned"></param>
-		/// <returns></returns>
-		private int GetPageAlignedSize(int nonAligned)
+        public Task DeleteAsync(CancellationToken cancellationToken)
+        {
+            return _pageBlob.DeleteAsync(DeleteSnapshotsOption.IncludeSnapshots, null, null, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get page aligned number of bytes from a non page aligned number
+        /// </summary>
+        /// <param name="nonAligned"></param>
+        /// <returns></returns>
+        private int GetPageAlignedSize(int nonAligned)
 		{
 			var remainder = nonAligned % BlobPageSize;
 			return (remainder == 0) ? nonAligned : nonAligned + (BlobPageSize - remainder);
@@ -428,5 +466,5 @@ namespace NEventStore.Persistence.AzureBlob
 			else
 			{ return ex; }
 		}
-	}
+    }
 }
