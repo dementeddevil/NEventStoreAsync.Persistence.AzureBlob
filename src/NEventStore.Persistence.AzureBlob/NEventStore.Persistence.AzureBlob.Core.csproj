@@ -20,7 +20,7 @@
     <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+      <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="9.4.2" />
     </ItemGroup>
 
     <ItemGroup>
