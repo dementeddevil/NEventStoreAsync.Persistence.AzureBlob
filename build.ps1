@@ -15,7 +15,7 @@ choco install nuget.commandline
 choco upgrade nuget.commandline
 
 # Display minimal restore information
-dotnet restore ./src/NEventStore.Persistence.Sql.Core.sln --verbosity m
+dotnet restore ./src/NEventStoreAsync.Persistence.AzureBlob.Core.sln --verbosity m
 
 # GitVersion (for the main module)
 Write-Host "Running GitVersion for the Project"
