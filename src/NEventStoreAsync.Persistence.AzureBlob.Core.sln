@@ -3,18 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEventStore.Core", "..\dependencies\NEventStore\src\NEventStore\NEventStore.Core.csproj", "{6F7B51D5-C6F0-4D10-BCCD-E813F005BF21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEventStoreAsync.Core", "..\dependencies\NEventStore\src\NEventStore\NEventStoreAsync.Core.csproj", "{6F7B51D5-C6F0-4D10-BCCD-E813F005BF21}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A05F912F-86CC-4106-BEB4-B1856BCA6739}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEventStore.Persistence.AcceptanceTests.Core", "..\dependencies\NEventStore\src\NEventStore.Persistence.AcceptanceTests\NEventStore.Persistence.AcceptanceTests.Core.csproj", "{8F9CC671-02C9-4C91-889A-6C3D9FB5905D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEventStoreAsync.Persistence.AcceptanceTests.Core", "..\dependencies\NEventStore\src\NEventStore.Persistence.AcceptanceTests\NEventStoreAsync.Persistence.AcceptanceTests.Core.csproj", "{8F9CC671-02C9-4C91-889A-6C3D9FB5905D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".core", ".core", "{7B0D03A4-5CB2-4674-AE01-F33F321B6FA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEventStore.Persistence.AzureBlob.Core", "NEventStore.Persistence.AzureBlob\NEventStore.Persistence.AzureBlob.Core.csproj", "{88B5B4C3-7019-43A7-8348-94A42A87F06F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEventStoreAsync.Persistence.AzureBlob.Core", "NEventStore.Persistence.AzureBlob\NEventStoreAsync.Persistence.AzureBlob.Core.csproj", "{88B5B4C3-7019-43A7-8348-94A42A87F06F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

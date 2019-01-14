@@ -3,8 +3,19 @@
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <AssemblyName>NEventStore.Persistence.AzureBlob</AssemblyName>
+        <AssemblyName>NEventStoreAsync.Persistence.AzureBlob</AssemblyName>
         <RootNamespace>NEventStore.Persistence.AzureBlob</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>NEventStoreAsync.Persistence.AzureBlob</PackageId>
+        <Title>NEventStoreAsync.Persistence.AzureBlob</Title>
+        <Authors>NEventStore Dev Team;Adrian Lewis;Chris Evans</Authors>
+        <PackageProjectUrl>https://github.com/dementeddevil/NEventStoreAsync.Persistence.AzureBlob</PackageProjectUrl>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Description>Async capable persistence store for NEventStoreAsync.</Description>
+        <PackageTags>events, event sourcing, cqrs, storage, persistence, database</PackageTags>
+        <PackageReleaseNotes>Please check the release notes on github.</PackageReleaseNotes>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
@@ -22,9 +33,8 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="9.4.2" />
     </ItemGroup>
-
     <ItemGroup>
-        <ProjectReference Include="..\..\dependencies\NEventStore\src\NEventStore\NEventStore.Core.csproj" />
+      <ProjectReference Include="..\..\dependencies\NEventStore\src\NEventStore\NEventStoreAsync.Core.csproj" />
     </ItemGroup>
 
   <ItemGroup>
