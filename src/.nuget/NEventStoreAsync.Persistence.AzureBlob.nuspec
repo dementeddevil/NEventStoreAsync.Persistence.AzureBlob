@@ -21,10 +21,10 @@
 	-->
     <dependencies>
       <group targetFramework=".NETFramework4.6">
-        <dependency id="NEventStore" version="(5.99.99,7.0.0)" exclude="Build,Analyzers"/>
+        <dependency id="NEventStoreAsync" version="(0.99.99,2.0.0)" exclude="Build,Analyzers"/>
       </group>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="NEventStore" version="(5.99.99,7.0.0)" exclude="Build,Analyzers"/>
+        <dependency id="NEventStoreAsync" version="(0.99.99,2.0.0)" exclude="Build,Analyzers"/>
         <dependency id="System.Data.SqlClient" version="4.5.1" exclude="Build,Analyzers" />
       </group>
     </dependencies>
