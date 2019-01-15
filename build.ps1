@@ -8,6 +8,8 @@ if ($configuration -eq '') {
 }
 $runtests = Read-Host 'Run Tests (y / n) [default:n] ?'
 
+$patchdependencies = Read-Host 'Patch version of dependencies [default:n] ?'
+
 # Consider using NuGet to download the package (GitVersion.CommandLine)
 choco install gitversion.portable --pre --y
 choco upgrade gitversion.portable --pre --y
@@ -19,13 +21,15 @@ dotnet restore ./src/NEventStoreAsync.Persistence.AzureBlob.Core.sln --verbosity
 
 # GitVersion (for the main module)
 Write-Host "Running GitVersion for the Project"
-$str = gitversion /updateAssemblyInfo | out-string
+$str = gitversion /updateAssemblyInfo ./src/VersionAssemblyInfo.cs | out-string
 $json = convertFrom-json $str
 $nugetversion = $json.NuGetVersion
 
 # Now we need to patch the AssemblyInfo for submodules
-Write-Host "Running GitVersion for the Dependencies"
-gitversion ".\dependencies\NEventStore" /updateAssemblyInfo | Out-Null
+if ($patchdependencies -eq "y") {
+	Write-Host "Running GitVersion for the Dependencies"
+	gitversion ".\dependencies\NEventStore" /updateAssemblyInfo | Out-Null
+}
 
 # Build
 Write-Host "Building: "$nugetversion" "$configuration
