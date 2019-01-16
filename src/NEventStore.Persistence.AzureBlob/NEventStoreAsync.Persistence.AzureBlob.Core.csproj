@@ -12,10 +12,13 @@
         <Title>NEventStoreAsync.Persistence.AzureBlob</Title>
         <Authors>NEventStore Dev Team;Adrian Lewis;Chris Evans</Authors>
         <PackageProjectUrl>https://github.com/dementeddevil/NEventStoreAsync.Persistence.AzureBlob</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/dementeddevil/NEventStoreAsync.Persistence.AzureBlob.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <Description>Async capable persistence store for NEventStoreAsync.</Description>
         <PackageTags>events, event sourcing, cqrs, storage, persistence, database</PackageTags>
         <PackageReleaseNotes>Please check the release notes on github.</PackageReleaseNotes>
+        <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
